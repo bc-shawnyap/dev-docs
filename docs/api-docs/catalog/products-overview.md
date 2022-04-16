@@ -844,35 +844,58 @@ X-Auth-Token: {{ACCESS_TOKEN}}
 
 <!-- [![Open in Request Runner](https://storage.googleapis.com/bigcommerce-production-dev-center/images/Open-Request-Runner.svg)](/api-reference/catalog/catalog-api/category/createcategory#requestrunner) -->
 
-### Category tree
+## Category trees
 
-[Category Tree](/api-reference/store-management/catalog/category/getcategorytree) returns a simple view of the parent > child relationship of all categories in the store. You can use this endpoint to fetch the categories if building out a custom navigation for a store.
+Product categories can have their own subcategories. The relationship hierarchy of a store or storefront's categories is called a **category tree**. Category trees belong to channels. In a single storefront store, channel `1` is the only channel.
 
-```http
-GET https://api.bigcommerce.com/stores/{{STORE_HASH}}/v3/catalog/categories/tree
+The following is a series of example requests to the [Get all category trees](/api-reference/store-management/catalog/category-trees/getcategorytrees) endpoint and [Get a category tree](/api-reference/store-management/catalog/category-trees/getacategorytree) endpoint to retrieve the category tree for channel `1`. 
+
+```http title="Example request: Get the category tree for channel 1"
+GET https://api.bigcommerce.com/stores/{{STORE_HASH}}/v3/catalog/trees?channel_id:in=1
 Accept: application/json
 Content-Type: application/json
 X-Auth-Token: {{ACCESS_TOKEN}}
 ```
-
-**Response:**:
-
-```json
+&nbsp;
+```json title="Example response: Get the category tree for channel 1" lineNumbers
+{
+  "data": [
+    {
+      "id": 12,
+      "name": "Home Linens Category Tree",
+      "channels": [
+        1
+      ]
+    }
+  ]
+}
+```
+&nbsp;
+```http title="Example request: Get category tree 12"
+GET https://api.bigcommerce.com/stores/{{STORE_HASH}}/v3/catalog/trees/12/categories
+Accept: application/json
+Content-Type: application/json
+X-Auth-Token: {{ACCESS_TOKEN}}
+```
+&nbsp;
+```json title="Example response: Get category tree 12" lineNumbers
 {
   "data": [
     {
       "id": 25,
       "parent_id": 0,
+      "depth": 0,
       "name": "Towels",
       "is_visible": true,
-      "url": "/towels/",
+      "path": "/towels/",
       "children": [
         {
           "id": 26,
           "parent_id": 25,
+          "depth": 1,
           "name": "Bath Towels",
           "is_visible": true,
-          "url": "/towels/bath-towels/",
+          "path": "/towels/bath-towels/",
           "children": [
             {
               ...
