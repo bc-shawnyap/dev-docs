@@ -170,10 +170,10 @@ X-Auth-Token: {{ACCESS_TOKEN}}
 
 <!-- theme: info -->
 > #### Note
-> * If using `image_file`, set `Content-Type` header to `multipart/form-data` -- otherwise, you will be unable to add subsequent requests.
+> * If using `image_file`, set the `Content-Type` header to `multipart/form-data`. Otherwise, you will be unable to add subsequent requests.
 > * Set `is_thumbnail` to true to use this image on product listing pages.
 > * A product can have only one thumbnail image at a time.
-> * If only one image is on the product, it becomes both the thumbnail and the main product image.
+> * If only one image is associated with a product, it is both the main product image and the thumbnail.
 > * You can also add variant-specific images when [creating a variant](/api-reference/store-management/catalog/product-variants/createvariant).
 
 ## Adding product videos
@@ -222,7 +222,7 @@ X-Auth-Token: {{ACCESS_TOKEN}}
 <!-- [![Open in Request Runner](https://storage.googleapis.com/bigcommerce-production-dev-center/images/Open-Request-Runner.svg)](/api-reference/catalog/catalog-api/product-custom-fields/createcustomfield#requestrunner) -->
 
 <!-- theme: info -->
-> #### Note
+> #### Custom field limits
 > Custom field values are limited to **250** characters. For more about using custom fields, see [Custom Fields](https://support.bigcommerce.com/s/article/Custom-Fields).
 
 ## Adding bulk pricing rules
@@ -252,6 +252,8 @@ X-Auth-Token: {{ACCESS_TOKEN}}
   ]
 }
 ```
+
+For details about configuring bulk prices, see [Bulk Pricing](https://support.bigcommerce.com/s/article/Bulk-Pricing).
 
 <!-- [![Open in Request Runner](https://storage.googleapis.com/bigcommerce-production-dev-center/images/Open-Request-Runner.svg)](/api-reference/catalog/catalog-api/product-bulk-pricing-rules/updatebulkpricingrule#requestrunner) -->
 
@@ -343,7 +345,7 @@ In this example, every meaningfully distinct pair of shoes is a product variant.
 In theory, these variant options and variant option values form 270 possible distinct variants of signature sneakers.  In practice, these may not all exist!  Variants can have their own prices, weights, dimensions, images, etc.  They will inherit these values from the parent product if you do not specify them.  Variants are typically what you track inventory against, so each variant must have its own _SKU_.  The catalog generates the set of possible variants based on the variant options you configure using the control panel or the [Create a product](/api-reference/store-management/catalog/products/createproduct) endpoint.
 
 <!-- theme: info -->
-> Consult the [Create a variant](/api-reference/store-management/catalog/product-variants/createvariant) reference for limits. If you're working with more variants, categories and metafields can help to integrate multiple products.
+> Consult the [Create a variant](/api-reference/store-management/catalog/product-variants/createvariant) endpoint reference for limits. If you're working with more variants, categories and metafields can help to integrate multiple products.
 
 ## Variant options
 If a product has variants, the shopper must select a value for each variant option before adding the product to their cart.  The shopper typically makes this choice by manipulating a UI element, such as a
@@ -464,7 +466,9 @@ X-Auth-Token: {{ACCESS_TOKEN}}
               "#123C91"
             ]
           },
+        },
           ...
+
       ],
       "config": []
     }
@@ -627,13 +631,9 @@ X-Auth-Token: {{ACCESS_TOKEN}}
   "display_name": "Add a $5 Donation"
 }
 ```
-
+&nbsp;
 <!-- [![Open in Request Runner](https://storage.googleapis.com/bigcommerce-production-dev-center/images/Open-Request-Runner.svg)](/api-reference/catalog/catalog-api/product-modifiers/createmodifier#requestrunner) -->
-
-
-**Response:**
-
-```json
+```json title="Example response: Create a modifier" lineNumbers
 {
   "data": [
     {
